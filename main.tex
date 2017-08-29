@@ -1,0 +1,43 @@
+\documentclass[11pt, oneside, a4paper, openany]{book}
+\usepackage[a4paper,top=3cm,bottom=2.3cm,left=2.2cm,right=2.2cm]{geometry} % margens
+\usepackage[usenames, dvipsnames]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[shortlabels]{enumitem}
+\usepackage{amsmath}
+\usepackage{ifthen, ifmtarg}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=violet!85!black,
+	linkcolor=MidnightBlue,
+	urlcolor=MidnightBlue
+}
+\usepackage{setspace}
+\usepackage{subfiles}
+
+\usepackage{commands}
+
+\title{Integer Optimization}
+\date{\today}
+
+\begin{document}
+
+\frontmatter
+
+\onehalfspacing  % espaçamento
+
+\pagenumbering{gobble}
+\begingroup
+\let\cleardoublepage\clearpage
+\tableofcontents
+\endgroup
+
+\mainmatter
+\pagenumbering{arabic}
+
+\chapter{Class 1}
+\subfile{classes/class1}
+
+\end{document}

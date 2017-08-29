@@ -1,0 +1,18 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+An integer program is a problem of the form
+
+\begin{optimize}{IP}
+\text{Maximize } c^T x \\
+\text{subject to } Ax \leq b \\
+x \in \Z^n
+\end{optimize}
+
+for some~${A \in \R^{n \x m}, b \in \R^m}$ and~$c \in \R^n$. \\
+
+The LP relaxation of (IP) is the LP obtained from (IP) by dropping the integrality constraint.
+Since the feasible region of (IP) is contained in the feasible region of its LP relaxation, the answer for that problem is an upper bound to the IP.
+
+\end{document}

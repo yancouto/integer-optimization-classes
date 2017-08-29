@@ -1,0 +1,20 @@
+% Environments
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lema}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newenvironment{optimize}[1]
+ {\begin{equation}\@ifnotmtarg{#1}{\tag{#1}}\begin{aligned}}
+ {\end{aligned}\end{equation}}
+
+
+% Operators
+\newcommand{\x}{\times}
+
+% Common Sets
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rp}{\mathbb{R}_+}
+\newcommand{\Rpp}{\mathbb{R}_{++}}
+
+\newcommand{\Z}{\mathbb{Z}}
