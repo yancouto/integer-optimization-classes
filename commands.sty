@@ -3,11 +3,12 @@
 \newtheorem{corollary}{Corollary}
 \newtheorem{lemma}{Lema}
 \newtheorem{proposition}{Proposition}
-\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+
 \newenvironment{optimize}[1]
  {\begin{equation}\@ifnotmtarg{#1}{\tag{#1}}\begin{aligned}}
  {\end{aligned}\end{equation}}
-
 
 % Operators
 \newcommand{\x}{\times}
@@ -18,3 +19,27 @@
 \newcommand{\Rpp}{\mathbb{R}_{++}}
 
 \newcommand{\Z}{\mathbb{Z}}
+
+% Extra
+\renewcommand{\emph}[1]{\underline{\smash{#1}}}
+
+% Copied
+% Pretty bar
+\newsavebox\myboxA
+\newsavebox\myboxB
+\newlength\mylenA
+
+\newcommand*\xbar[2][0.75]{%
+    \sbox{\myboxA}{$\m@th#2$}%
+    \setbox\myboxB\null% Phantom box
+    \ht\myboxB=1.1\ht\myboxA%
+    \dp\myboxB=\dp\myboxA%
+    \wd\myboxB=#1\wd\myboxA% Scale phantom
+    \sbox\myboxB{$\m@th\overline{\copy\myboxB}$}%  Overlined phantom
+    \setlength\mylenA{\the\wd\myboxA}%   calc width diff
+    \addtolength\mylenA{-\the\wd\myboxB}%
+    \ifdim\wd\myboxB<\wd\myboxA%
+       \rlap{\hskip 0.5\mylenA\usebox\myboxB}{\usebox\myboxA}%
+    \else
+        \hskip -0.5\mylenA\rlap{\usebox\myboxA}{\hskip 0.5\mylenA\usebox\myboxB}%
+    \fi}

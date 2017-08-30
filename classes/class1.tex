@@ -5,14 +5,61 @@
 An integer program is a problem of the form
 
 \begin{optimize}{IP}
-\text{Maximize } c^T x \\
-\text{subject to } Ax \leq b \\
-x \in \Z^n
+	\text{Maximize } c^T x & \\
+	\text{subject to } Ax \leq b& \\
+	x \in \Z^n &\text{\footnotesize\hspace{10pt}(Integrality constraint)}
 \end{optimize}
 
 for some~${A \in \R^{n \x m}, b \in \R^m}$ and~$c \in \R^n$. \\
 
 The LP relaxation of (IP) is the LP obtained from (IP) by dropping the integrality constraint.
 Since the feasible region of (IP) is contained in the feasible region of its LP relaxation, the answer for that problem is an upper bound to the IP.
+
+\begin{definition}
+	An \emph{optimization problem} is an oerdered pair~$(X, f)$ where~$X$ is a set and~${f: X \rightarrow [-\infty,+\infty]}$ is a (extended real-valued) function. It is customarily written as
+	\begin{optimize}{OPT}
+		\text{Minimize } f(x) \\
+		\text{subject to } x \in X
+	\end{optimize}
+\end{definition}
+
+Elements of~$X$ are called \emph{feasible points} or \emph{feasible solutions}, everything else is infeasible.
+The optimization problem is \emph{feasible} if~${X \neq \emptyset}$, other it's \emph{infeasible}.
+The \emph{objective value} of~${x \in X}$ is~$f(x)$. The \emph{optimal value} of (OPT) is~$${\inf\limits_{x \in X} f(x)} \hspace{10pt} \in [-\infty, +\infty]$$.
+
+A feasible solution~$\xbar{x}$ is optimal if~$f(\xbar{x})$ is the optimal value of the problem, i.e., if~${f(\xbar{x}) = f(x)\ \forall x \in X}$. If the optimal value is~$-\infty$, the problem is \emph{unbounded}.
+
+When we write
+\begin{optimize}{OPT}
+	\text{Maximize } f(x) \\
+	\text{s.t. } x \in X
+\end{optimize}
+
+we are referring to the optimization problem~$(X, -f)$, with the obvious changes.
+
+\begin{definition}
+	A \emph{mixed integer program} (MIP) is an optimization problem of the form.
+	\begin{optimize}{MIP}
+		\text{Min } c^T x + h^T r \\
+		\text{s.t. } Ax + Gr \leq b \\
+		x \in \Z^V,\ r \in \R^W
+	\end{optimize}
+	for some finite sets~$U, V, W$, matrices~${A \in \R^{U \x V}, G \in \R^{U \x W}}$, and vectors~${b \in \R^U, c \in \R^V, h \in \R^W}$.
+\end{definition}
+
+The system ${Ax + Gy \leq b}$ is an \emph{MIP formulation} for~(MIP).
+If~$W \neq \emptyset$, the MIP is an \emph{integer program}~(IP).
+A subset~$P$ of~$\R^V$ is a polyhedron if~$P = \{x \in \R^V : Ax \leq b\}$ for some finite set~$U$, matrix~${A \in \R^{U \x V}}$ and vector ${b \in \R^V}$.
+
+A \emph{linear program}~(LP) is an optimization problem such that the feasible region is a polyhedron in~$\R^V$ and whose objective function is linear from~$\R^V$ to~$\R$.
+
+The~\emph{LP relaxation} of an MIP formulation~${Ax + Gr \leq b}$ with objective function~${(x, r) \mapsto c^T x + h^T r}$ is the LP
+\begin{optimize}{LPr}
+	\text{Min } c^T x + h^T r \\
+	\text{s.t } Ax + Gr \leq b \\
+	x \in \R^V, x \in \R^W
+\end{optimize}
+
+If~${A_1x + G_1r \leq b_1}$ and~${A_2x + G_2r \leq b_2}$ are MIP formulations with the same feasible region, the first formulation is \emph{stronger} than the second one if the LP relaxation of the first is contained in the second.
 
 \end{document}
