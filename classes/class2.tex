@@ -1,0 +1,94 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{Formulation Examples}
+
+\subsection*{Satisfiability (CNF)}
+
+Given~${n \in \N}$ and a collection~$\mC$ of subsets of~${[n]\footnotemark{} \cup -[n]\footnotemark{}}$, decide whether there exists~${u : [n] \rightarrow \{\true, \false\}}$ such that
+
+\addtocounter{footnote}{-1}
+\footnotetext{$[n] \coloneqq \{1,\ldots, n\}$}
+\stepcounter{footnote} \footnotetext{$-X \coloneqq \{-x : x \in X\}$ (Minkowski notation)}
+
+$$ \bigwedge\limits_{C \in \mC}{\left(  \bigvee\limits_{\substack{i \in C \\ i > 0}}{u_i} \vee  \bigvee\limits_{\substack{i \in C \\ i < 0}}{\neg u_{-i}} \right)} \text{ is true.}$$
+
+The latter is true if the IP
+
+\begin{optimize}{SAT}
+\text{Max } &\text{(any function)} && \\
+\text{s.t. } &\sum\limits_{\substack{i \in C \\ i > 0}}{x_i} + \sum\limits_{\substack{i \in C \\ i < 0}}{\left(1 - x_{-i}\right)} \geq 1 && \hspace{13pt}\forall C \in \mC \\
+&x \in \{0, 1\}^n \footnotemark &&
+\end{optimize}
+
+is feasible.
+
+\footnotetext{short for~$0 \leq x \leq \ones\footnotemark$}
+\footnotetext{$\ones$ is the vector of all ones}
+
+\subsection*{Sudoku}
+
+Given~$C \subseteq [9]^3$, decide whether it is possible to complete a sudoku board s.t. the entry~$i,j$ equals~$k$ for each~$(i, j, k) \in C$.
+
+\emph{Formulation trick}: Send all of the complexity of the problem into the indices of the variables.
+
+The variables will be
+$$x_{i, j, k} \coloneqq [\text{entry } i, j \text{ is filled with } k]\footnotemark \hspace{13pt} \forall (i, j, k) \in [9]^3 $$
+
+\footnotetext{Iverson notation: for a predicate~$P$,~$[P]$ is 1 if~$P$ is true, and~0 otherwise.}
+
+The restrictions will be:
+
+\begin{align*}
+\sum\limits_{j=1}^9{x_{i,j,k}} &= 1 &\forall (i, j) \in [9]^2 & & \text{(each row has each number exactly once)} \\
+\sum\limits_{i=1}^9{x_{i,j,k}} &= 1 &\forall (j, ) \in [9]^2 &  & \text{(each column has each number exactly once)} \\
+\sum\limits_{a=0}^2{\sum\limits_{b=0}^2{x_{i+a,j+b,k}}} &= 1 &\forall (i, j, k) \in \{1, 4, 7\} \x [9]^2 & & \text{(each 3x3 box has each number exactly once)} \\
+\sum\limits_{k=1}^9{x_{i,j,k}} &= 1 &\forall (i, j) \in [9]^2 & & \text{(Each entry $i, j$ has exactly one number)} \\
+x_{i,j,k} &= 1 & \forall (i, j, k) \in C & & \text{(can't change the original number)} \\
+x &\in \{0, 1\}^{[9]^3}
+\end{align*}
+
+Expanded form of the formulation trick:
+\begin{itemize}
+\item Make heavy use of \emph{binary values}.
+\item Avoid the use of nonbinary integer variables, unless dealing with quantities.
+\end{itemize}
+
+\subsection*{A Scheduling Problem}
+----
+
+\subsection*{The Knapsack Problem}
+Given a set~$V$ of item types, and vectors~${a : V \rightarrow \Rpp\footnotemark}$ and~${c: V \rightarrow \Rpp}$ that encode the weight and value of each type, respectively, what is the maximum total value of items that can fit in a knapsack that can carry a maximum weight of~${\beta \in \Rpp}$?
+
+\footnotetext{$\Rpp \coloneqq \{x \in \R : x > 0\}$}
+
+Formulation:
+
+\begin{optimize} {KNPSK}
+\text{Max } &c^T x \\
+\text{s.t. } &a^T x \leq \beta \\
+&x \in \Zp^V
+\end{optimize}
+
+If items of type~$U \subseteq V$ have a finite supply of~$u: U \rightarrow \Zp$, we may add the constraints $$ x_i \leq u_i \hspace{10pt} \forall i \in U$$
+
+\subsection*{Max Sat}
+Given~$n \in \N$ and a collection~$\mC$ of subsets of~${[n] \cup -[n]}$, find~${u: [n] \rightarrow \{\true, \false\}}$ that maximizes
+$$ \left|\left\{C \in \mC : \bigvee\limits_{\substack{i \in C \\ i > 0}}{u_i} \vee \bigvee\limits_{\substack{i \in C \\ i < 0}}{\neg u_{-i}} \text{ is true}\right\}\right| $$
+
+To do that, add new variables~$y_C$, for~$C \in \mC$, which will represent whether~$C$ is satisfied.
+
+\begin{optimize}{MAXSAT}
+\text{Max } & \ones^T y &\\
+\text{s.t. } & \sum\limits_{\substack{i \in C \\ i > 0}}{x_i} + \sum\limits_{\substack{i \in C \\ i < 0}}{\left(1 - x_{-i}\right)} \geq y_C & \forall C \in \mC \\
+& x \in \{0, 1\}^n & \\
+& y \in \{0, 1\}^\mC &
+\end{optimize}
+
+Formulation trick: (for optimization in general)
+\begin{itemize}
+\item A variable need only have its desired meaning at optimal solutions, not at every feasible solution.
+\end{itemize}
+
+\end{document}

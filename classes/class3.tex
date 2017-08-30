@@ -1,0 +1,18 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\subsection*{The assignment problem}
+
+Each worker in~$[n]$ must be assigned to perform exactly one job in~$[n]$, and when worker~${i \in [n]}$ performs job~${j \in [n]}$, he gets paid~$c_{i,j}$ dollars. What is the minimum cost to get all~$n$ jobs done?
+
+This is the minimum cost perfect matching problem. The formulation using IP is as follows:
+
+\begin{optimize}{ASGN}
+\text{Min } & c^T x & \\
+\text{s.t. } & x \in \{0, 1\}^{[n] \x [n]} & \\
+& \sum\limits_{j \in [n]}{x_{i,j}} = 1 & \forall i \in [n] \\
+& \sum\limits_{i \in [n]}{x_{i,j}} = 1 & \forall j \in [n]
+\end{optimize}
+
+\end{document}
