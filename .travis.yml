@@ -1,0 +1,19 @@
+os: linux
+sudo: required
+dist: trusty
+addons:
+  apt:
+    packages:
+      - texlive-full
+script:
+  - make -b
+  - make -b
+  - mkdir -p site
+  - mv main.pdf site/classes.pdf
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: site/
+  on:
+    branch: master
