@@ -15,4 +15,118 @@ This is the minimum cost perfect matching problem. The formulation using IP is a
 & \sum\limits_{i \in [n]}{x_{i,j}} = 1 & \forall j \in [n]
 \end{optimize}
 
+\subsection*{The assymetric travelling salesman problem (ATSP)}
+
+Let~${D = (V, A)}$ be a digraph, and let~${c: A \rightarrow \Rp}$. A \emph{hamiltonian tour} in~$D$ is a circuit in~$D$ that visits each vertex in~$V$ exactly once. Find a hamiltonian tour~$(v_0, v_1, \ldots, v_n)$ that minimizes~$\sum\limits_{i=1}^n{c(v_{i-1}v_i)}$.
+
+Notation: Let~$S \subseteq V$. Define
+\begin{align*}
+	&\dout(S) \coloneqq \{a = uv \in A : u \in S, v \not\in S\} \text{ and} \\
+	&\din(S) \coloneqq \dout(V \setminus S).
+\end{align*}
+
+Let~$u \in V$. Define
+\begin{align*}
+	&\dout(u) \coloneqq \dout(\{u\}) \text{ and} \\
+	&\din(u) \coloneqq \din(\{u\}).
+\end{align*}
+
+The IP formulation is the following, originally by Dantzig-Fulkerson-Johnson (1954).
+
+\begin{optimize}{ATSP}
+	\text{Min } & c^T x \\
+	\text{s.t. } & \ones_{\dout(S)}^T\footnotemark x \geq 1 & \hspace{10pt} \forall \emptyset \neq S \subsetneq V \\
+	& \ones_{\dout(u)}^T x = 1 & \forall u \in V \\
+	& \ones_{\din(u)}^T x = 1 & \forall u \in V \\
+	& x \in \{0, 1\}^A
+\end{optimize}
+\footnotetext{If~$A \subseteq B$, then~$\ones_A \coloneqq x \in B \mapsto [x \in A]$ is the incidence vector of~$A$ in~$B$.}
+
+The~$x$ vector will be the incidence vector of the chosen edges. The second and third restrictions are called \emph{degree constraints}, and they guarantee that each vertex is visited exactly once and is in exactly one cycle. It does not guarantee that there is exactly one cycle. The first restriction is called \emph{subtour elimination constraint} and guarantees this.
+
+For any~$x \in [0, 1]^A$, we can find if any of the subtour elimination constraints are unsatisfied using minimum cut, and therefore solve the LP-relaxation of ATSP in polynomial time.
+
+\subsection*{Cutting Stock}
+
+We have a supply of~$p$ large rolls of paper, each of width~$W$. Given~${w: [m] \rightarrow \Rp}$ and~${b: [m] \rightarrow \Zp}$, we need to meet a demand for~$b_i$ small rools of width~$w_i$ for each~$i \in [m]$ to be cut out of the large rolls. Minimize the total number of large rolls used to meet this demand.
+
+The variables will have the following meanings:
+\begin{itemize}
+	\item $y_j \coloneqq 1$ iff the roll~$j$ was cut
+	\item $x_{i, j} \coloneqq$ the number of rolls of width~$w_i$ to be cut from large roll~$j$.
+\end{itemize}
+
+The IP formulation will be as follows
+
+\begin{optimize}{CUT}
+	\text{Min } & \ones^T y \\
+	\text{s.t } & \sum\limits_{i = 1}^m{w_i x_{i,j}} \leq W y_j & \forall j \in [p] \\
+	& \sum\limits_{j = 1}^p{x_{i, j}} = b_i & \forall i \in [m] \\
+	& x \in \Zp^{[m] \x [p]} \\
+	& y \in \{0, 1\}^p
+\end{optimize}
+
+The first restriction guarantees that each roll is not cut more than possible, and the second guarantees that all the desired~$b_i$ pieces are obtained for each client. The~$"\leq W y_j"$ restriction is a IP trick. If~$y_j$ is 0, no piece can be cut from the roll, otherwise we can cut until its size. Notice that~$W$ is a constant, so this is indeed an IP.
+
+The usual format of this trick is using~$x \geq 0$ and $x \leq U y_i$ where~$y_i$ is a~0,1 variable and~$U$ is a trivial upper bound for~$x$. That means if~$y_i$ is 0 then so is~$x$, and otherwise there is no actual restriction on~$x$. This trick usually yields poor LP relaxations.
+
+\subsection*{Facility Location}
+
+A company needs to meet the demands of~$n$ customers. Customer~${j \in [n]}$ requires~$d_j$ units of the product (e.g. orange juice). The company may set up a subset of certain~$m$ supply facilities. Setting up facility~$i$ costs~$f_i$, and, if set up, it can supply~$u_i$ units of the product.
+
+Sending one unit of the product from facility~$i$ to customer~$j$ costs~$c_{i,j}$. Minimize the total operation cost.
+
+The variables will have the following meanings:
+
+\begin{itemize}
+	\item $x_i \coloneqq [$ facility~$i$ is set up $]$
+	\item $y_{i,j} \coloneqq $ how much facility~$i$ supplies~$j$.
+\end{itemize}
+
+The IP will be as follows:
+
+\begin{optimize}{FL}
+	\text{Min } & f^T x + c^T y \\
+	\text{s.t. } & x \in \{0, 1\}^m \\
+	& y \in \Rp^{[n] \x [m]} \\
+	& \sum_{j=1}^n{y_{i, j}} \leq u_i x_i & \forall i \in [m] \\
+	& \sum_{i=1}^m{y_{i, j}} = d_j & \forall j \in [n]
+\end{optimize}
+
+The first restriction guarantees facility~$i$ doesn't produce more product than~$u_i$, and the second guarantees every customer gets what he asked for.
+
+Formulation Trick: Fixed charges
+
+To mode the ``cost'' of a variable~$x$ given by $x \in [0, M] \mapsto cx + [x > 0] f \in \Rpp$
+use the constraints
+\begin{align*}
+	x &\geq 0 \\
+	x &\leq My \\
+	y &\in \{0, 1\}
+\end{align*}
+and formulate the cost as $cx + fy$ (for minimization).
+This is sometimes called \emph{big-M formulation}.
+
+\subsection*{Modeling Disjunctions}
+Let~$A_i \in \R^{[m_i] \x [n]}$ and~${b_i \in \R^{m_i}}$ for~${i \in [2]}$.
+Suppose there exist~${M_i \in \R}$ such that~${x \in \R^n}$ and~${A_i x \leq b_i \Rightarrow 0 \leq x \leq M_i \ones}$ for~${i \in [2]}$.
+
+Then the constraint that at least one of~${A_1 x \leq b_1}$ or~${A_2 x \leq b_2}$ can be modeled as
+
+\begin{optimize}{DSJ}
+	A_i u_i &\leq y_i b_i  &\forall i \in [2] \\
+	u_1 &+ u_2 = x & \\
+	u_1,\ &u_2 \in \R^n \\
+	0 \leq u_i &\leq M_i y_i \ones &\forall i \in [2] \\
+	y &\in \{0, 1\}^2 \\
+	y_1 &+ y_2 = 1
+\end{optimize}
+
+Given~$\xb$ such that~${A_1 \xb \leq b_1}$, then~$u_1 = \xb$,~$u_2 = 0$,~$y_1 = 1$,~$y_2 = 0$ works as a solution to (DSJ).
+Given a solution to (DSJ). Assume~$y_1 = 1$, then~$y_2 = 0$,~$u_1 = x$,~$u_2 = 0$ and~$A_1 x \leq b1$ is satisfied.
+
+\begin{exercise}
+	Formulate and prove a claim that states that the formulation is correct.
+\end{exercise}
+
 \end{document}

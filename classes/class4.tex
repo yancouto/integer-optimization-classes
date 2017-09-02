@@ -1,0 +1,32 @@
+\documentclass[../main.tex]{subfiles}
+
+\begin{document}
+
+\section*{Hypergraphs}
+
+Let~$V$ be a ground set. Let~${\mF \subseteq \mP(V)}$\footnote{$\mP(V) \coloneqq \{S : S \subseteq V\}$ is the power set of~$V$.}.
+A set~${U \subseteq V}$ is a \emph{packing} of~$\mF$ if~${|U \cap F| \leq 1}$ for each~${F \in \mF}$. A set~${U \subseteq V}$ is a \emph{covering} of~$\mF$ if~${|U \cap F| \geq 1}$ for all~${F \in \mF}$.
+
+The ordered pair~${\mH \coloneqq (V, \mF)}$ is called a \emph{hypergraph}. The elements of~$\mF$ are the \emph{edges} of~$\mH$.
+The~$V \x \mF$ \emph{incidence matrix} of~$\mH$ is the matrix~$B_\mH \in \{0, 1\}^{V \x \mF}$ such that~${[B_\mH]_{v, F} \coloneqq [v \in F]}$ for all ${(v, F) \in V \x \mF}$.
+The~$\mF \x V$ incidence matrix is~$B_\mH^T$.
+
+The set packing problem for~$\mH$ is: given~${w \in \Rp^V}$, maximize~$w^T \ones_S$ such that~$S$ is a packing of~$\mH$~(of~$\mF$).
+It may be formulated as an IP as follows
+\begin{optimize}{PCK}
+	\text{Max } & w^T x \\
+	\text{s.t. } & B^T_\mH x \leq \ones \text{ (that is, $\sum\limits_{v \in F}{x_v} \leq 1\ \forall F \in \mF$)} \\
+	& x \in \{0, 1\}^V.
+\end{optimize}
+
+The set covering problem for~$\mH$ is: given~${w \in \Rp^V}$, minimize~$w^T \ones_S$ such that~$S$ is a covering of~$\mH$ (of~$\mF$).
+It may be formulated as an IP as follows
+\begin{optimize}{PCK}
+	\text{Min } & w^T x \\
+	\text{s.t. } & B^T_\mH x \geq \ones \\
+	& x \in \{0, 1\}^V.
+\end{optimize}
+
+These are called \emph{standard IP formulations} of the set packing and set covering problems.
+
+\end{document}
