@@ -1,0 +1,88 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Class 5}
+
+\begin{recall}
+	A \emph{hypergraph} is an ordered pair~$(V, \mE) \eqqcolon \mH$ where~$V$ is a (finite) set and~$\mE \subseteq \mP(V)$. Let~$V(\mH) \coloneqq V$ and~$\mE(\mH) \coloneqq \mE$.
+\end{recall}
+
+Let~$U \subseteq V$. We say that
+\begin{itemize}
+	\item $U$ is a packing of~$\mH$ if~$|U \cap F| \leq 1 \quad \forall F \in \mE$.
+	\item $U$ is a covering (or vertex cover) of~$\mH$ if~$|U \cap F| \geq 1 \quad \forall F \in \mE$.
+\end{itemize}
+
+We have seen that many classical combinatorial optimization problems on graphs may be formulated as packing or covering problems.
+
+\begin{exercise}
+	Let~$G = (V, E)$ be a graph with non-negative weights at the edges, and let~$S \subseteq V$. A \emph{Steiner tree} of~$G$ with respect to~$S$ is a subgraph of~$G$ that is a tree and whose vertex set contains~$S$. (Thus, the Steiner trees of~$G$ w.r.t~$V$ are exactly the spanning trees of~$G$)
+
+	Formulate the problem of finding a minimum cost Steiner tree of~$G$ w.r.t.~$S$ as a covering problem. Prove it.
+\end{exercise}
+
+\begin{exercise}
+	Let~$G = (V, E)$ be a graph and let~$T \subseteq V$. We say that~$F \subseteq E$ is a~\emph{$T$-join} of~$G$ if~$|F \cap \d(v)| \equiv [v \in T] \mod 2$ for any~$v \in V$. (Thus, every perfect matching of~$G$ is a~$V$-join of~$G$)
+
+	Formulate and prove the provlem of finding a minimum cost~$T$-join of~$G$ as a set-covering problem. All edge costs are non-negative.
+\end{exercise}
+
+Let~$\mH = (V, \mE)$ be a hypergraph. Define
+$$ H^{\min} \coloneqq (V, \{F \in \mE : \nexists E \in \mE \text{ s.t. } E \subsetneq F\}), $$
+the inclusion-wise minimal elements of~$\mE$, and
+$$ H^\uparrow \coloneqq (V, \{F \subseteq V : \exists E \in \mE \text{ s.t. } E \subseteq F\}). $$
+
+\begin{exercise}
+	If~$\mH, \mH_1$ and~$\mH_2$ are hypergraphs
+	\begin{enumerate}[(i)]
+		\item $\mH^{\uparrow\,\uparrow} = \mH^\uparrow$ and~$\mH^{{\min}\,{\min}} = \mH^{\min}$.
+		\item $\mH^{\uparrow\,\min} = \mH^{\min}$ and~$\mH^{{\min}\,\uparrow} = \mH^\uparrow$.
+		\item $\mH_1 \subseteq \mH_2 \Rightarrow \mH_1^\uparrow \subseteq \mH_2^\uparrow$.
+		\item $\mH_1 \subseteq \mH_2^\uparrow$ and~$\mH_2 \subseteq \mH_1^\uparrow \Rightarrow \mH_1^{\min} = \mH_2^{\min}$.
+		\item $\mH_1 \subseteq \mH_2^\uparrow \Rightarrow \mH_1^\uparrow \subseteq \mH_2^\uparrow$.
+	\end{enumerate}
+\end{exercise}
+
+Let~$\mH_1$ and~$\mH_2$ be hypergraphs.~$\mH_1 \subseteq \mH_2$ if~$V(\mH_1) \subseteq V(\mH_2)$ and~$\mE(\mH_1) \subseteq \mE(\mH_2)$. This partially orders hypergraphs.
+
+A hypergraph~$\mH$ is a \emph{clutter} if, whenever~$A, B \in \mE$ are distinct, we have~$A \subsetneq B$ and~$B \subsetneq A$. For instance,~$\mH^{\min}$ is a clutter. In fact, a hypergraph~$\mH$ is a clutter iff~$\mH = \mH^{\min}$.
+
+The blocker of a hypergraph~$\mH$ is the clutter
+$$ b(\mH) \coloneqq (V, \{C \subseteq V : C \cap F \neq \emptyset \quad \forall F \in \mE\})^{\min}. $$
+Note: the edges of~$b(\mH)^\uparrow$ are exactly the vertex covers of~$\mH$. Also,~$b(\mH) = b(\mH^{\min}) = b(\mH^\uparrow)$. (exercise: prove it)
+
+\begin{exercise}
+	If~$\mH_1$ and~$\mH_2$ are hypergraphs on the same vertex set, then~$$\mH_1 \subseteq \mH_2 \Rightarrow b(\mH_2)^\uparrow \subseteq b(\mH_2)^\uparrow. $$
+\end{exercise}
+
+Set covering problems are the problems of finding a minimum weight/cost edge of the blocker of some hypergraph.
+
+\begin{theorem}
+	(Lawler '66, Edmonds and Fulkerson '70)
+
+	Let~$\mH$ be a hypergraph. Then~$b(b(\mH)) = \mH^{\min}$. In particular, if~$\mH$ is a clutter, then~$b(b(\mH)) = \mH$.
+\end{theorem}
+
+\begin{proof}
+	Let's show that~$b(b(\mH))^\uparrow = H^\uparrow$ (A).
+
+	Let~$F \in \mE(\mH^\uparrow)$. Let~${E \in \mE(b(\mH))}$, then~${F \cap E \neq \emptyset}$. So~$F$ is a covering of~$b(\mH)$, that is,~${F \in \mE(b(b(\mH))^\uparrow)}$. So we proved~${\mE(H^\uparrow) \subseteq \mE(b(b(\mH))^\uparrow)}$.
+
+	We want to prove~${\mE(b(b(\mH))^\uparrow) \subseteq \mE(H^\uparrow) \iff \mP(V) \setminus \mE(b(b(\mH))^\uparrow) \supseteq \mP(V) \setminus \mE(\mH^\uparrow).}$
+
+	Let~${U \in \mP(V) \setminus \mE(\mH^\uparrow)}$, then
+
+	\begin{align*}
+		U \notin \mE(\mH^\uparrow) & \iff \nexists F \in \mE(\mH) \text{ s.t. } F \subseteq U \\
+		& \iff \forall F \in \mE(\mH) \quad F \subsetneq U \text{, that is, } (V \setminus U) \cap F \neq \emptyset \\
+		& \iff V \setminus U \text{ is a covering of } \mH \\
+		& \iff V \setminus U \in \mE(b(\mH)^\uparrow)
+	\end{align*}
+
+	That implies~$U$ is a not a covering of~$b(\mH^\uparrow)$, since~$U \cap (V \setminus U) = \emptyset$ and~${V \setminus U \in \mE(b(\mH)^\uparrow)}$. That means~${U \notin \mE(b(b(\mH)^\uparrow)^\uparrow) = \mE(b(b(\mE))^\uparrow)}$, that is,~${U \in \mP(V) \setminus \mE(b(b(\mH))^\uparrow)}$, so (A) is proved.
+
+	If we apply~${\min}$ to both sides of~(A), we get~${b(b(\mH)) = H^{\min}}$.
+\end{proof}
+
+\end{document}

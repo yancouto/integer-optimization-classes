@@ -1,6 +1,8 @@
-\documentclass[../main.tex]{subfiles}
+\documentclass[main.tex]{subfiles}
 
 \begin{document}
+
+\chapter{Class 4}
 
 \section*{Hypergraphs}
 
@@ -28,5 +30,27 @@ It may be formulated as an IP as follows
 \end{optimize}
 
 These are called \emph{standard IP formulations} of the set packing and set covering problems.
+
+\subsection*{Formulations}
+
+Let~$G=(V,E)$ be a graph. \\
+
+The set packing problem for~$G$ is the maximum weight stable (independent) set problem. ($S \subseteq V$ is stable if~$G[S]$ has no edges) \\
+
+The set covering problem for~$G$ is the minimum weight vertex cover problem. ($C \subseteq V$ is a vertex cover if~$G[V \setminus C]$ is stable) \\
+
+The set packing problem for~$(E, \{\d(u) : u \in V\})$ is the maximum weightmatching problem ($F \subseteq E$ is a matching if~$\mathit{deg}_{(V, F)} \leq \ones$) \\
+
+The set covering problem for~$(E, \{\d(u) : u \in V\})$ is the minimum weightedge cover problem ($F \subseteq E$ is an edge cover if~$\mathit{deg}_{(V, F)} \geq \ones$) \\
+
+The set packing problem for~$(V, \{K \subseteq V : K \text{ is a clique in } G\})$ is the maximum weight stable ser problem. \\
+
+The minimum weight cut problem is the set covering problem for~$(E, \{F \subseteq E : (V, F) \text{ is a tree}\})$. ($F \subseteq E$ is a cut of~$G$ if~$F = \d(S)$ for some~$\emptyset \neq S \subsetneq V$) \\
+
+The set covering problem for~$(E, \{E \setminus \d(S) : \emptyset \neq S \subsetneq V\})$ is the minimum weight odd cycle problem. \\
+
+The minimum weight dominating set problem is the set covering problem for~$(V, \{\{u\} \cup N(u) : u \in V\})$, where~$N(u) \coloneqq \{v : uv \in E\}$. ($S \subseteq V$ is \emph{dominating} if every vertex in~$V \setminus S$ has a neighbor in~$S$) \\
+
+Fix distinct~$s, t \in V$. The set covering problem for~$(E, \{E(P) : P \text{ is an $st$-path}\})$ is the minimum~$st$-cut problem. ($F \subseteq E$ is an \emph{$st$-cut} of~$G$ if~$F = \d(S)$ for some~$S \subseteq V$ such that~$s \in S$, and~$t \not\in S$).
 
 \end{document}

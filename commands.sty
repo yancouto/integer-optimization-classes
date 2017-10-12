@@ -6,6 +6,7 @@
 \newtheorem{exercise}{Exercise}
 \theoremstyle{definition}
 \newtheorem*{definition}{Definition}
+\newtheorem*{recall}{Recall}
 
 \newenvironment{optimize}[1]
  {\begin{equation}\@ifnotmtarg{#1}{\tag{#1}}\begin{aligned}}
@@ -14,6 +15,7 @@
 % Operators
 \newcommand{\x}{\times}
 
+\renewcommand{\d}{\updelta}
 \newcommand{\dout}{\updelta^{\mathit{out}}}
 \newcommand{\din}{\updelta^{\mathit{in}}}
 
@@ -24,6 +26,7 @@
 
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Zp}{\mathbb{Z_+}}
+\newcommand{\Zpp}{\mathbb{Z_{++}}}
 
 \newcommand{\N}{\mathbb{N}}
 
@@ -32,8 +35,18 @@
 \newcommand{\mP}{\mathcal{P}}
 \newcommand{\mF}{\mathcal{F}}
 \newcommand{\mH}{\mathcal{H}}
+\newcommand{\mE}{\mathcal{E}}
+\newcommand{\mB}{\mathcal{B}}
 
 \newcommand{\ones}{\mathds{1}}
+
+\newcommand{\coloneqq}{\vcentcolon=}
+\newcommand{\eqqcolon}{=\vcentcolon}
+
+% Math operators
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\aff}{aff}
+\DeclareMathOperator{\conv}{conv}
 
 % Extra
 \renewcommand{\emph}[1]{\underline{\smash{#1}}}
