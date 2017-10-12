@@ -1,8 +1,9 @@
 all: main.pdf
 
-main.pdf: *.tex *.sty classes/*.tex
-	pdflatex -halt-on-error -interaction nonstopmode main.tex
+.PHONY: clean main.pdf
 
-.PHONY: clean
+main.pdf:
+	latexmk --pdf -interaction=nonstopmode main.tex
+
 clean:
 	rm -f *.aux *.toc *.out *.log *.pdf

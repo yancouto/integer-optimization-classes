@@ -1,13 +1,12 @@
 os: linux
-sudo: required
 dist: trusty
-addons:
-  apt:
-    packages:
-      - texlive-full
+language: r
+before_install:
+    - tlmgr install latexmk
+    - tlmgr install texliveonfly
 script:
-  - make -b
-  - make -b
+  - texliveonfly main.tex
+  - make -B
   - mkdir -p site
   - mv main.pdf site/classes.pdf
 deploy:
