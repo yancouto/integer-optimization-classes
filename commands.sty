@@ -1,9 +1,9 @@
 % Environments
 \newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}
-\newtheorem{lemma}{Lema}
-\newtheorem{proposition}{Proposition}
-\newtheorem{exercise}{Exercise}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{exercise}[theorem]{Exercise}
 \theoremstyle{definition}
 \newtheorem*{definition}{Definition}
 \newtheorem*{recall}{Recall}
@@ -28,6 +28,8 @@
 \newcommand{\Zp}{\mathbb{Z_+}}
 \newcommand{\Zpp}{\mathbb{Z_{++}}}
 
+\newcommand{\Q}{\mathbb{Q}}
+
 \newcommand{\N}{\mathbb{N}}
 
 \newcommand{\mC}{\mathcal{C}}
@@ -47,6 +49,8 @@
 \DeclareMathOperator{\rank}{rank}
 \DeclareMathOperator{\aff}{aff}
 \DeclareMathOperator{\conv}{conv}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 % Extra
 \renewcommand{\emph}[1]{\underline{\smash{#1}}}

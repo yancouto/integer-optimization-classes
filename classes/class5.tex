@@ -53,7 +53,7 @@ $$ b(\mH) \coloneqq (V, \{C \subseteq V : C \cap F \neq \emptyset \quad \forall 
 Note: the edges of~$b(\mH)^\uparrow$ are exactly the vertex covers of~$\mH$. Also,~$b(\mH) = b(\mH^{\min}) = b(\mH^\uparrow)$. (exercise: prove it)
 
 \begin{exercise}
-	If~$\mH_1$ and~$\mH_2$ are hypergraphs on the same vertex set, then~$$\mH_1 \subseteq \mH_2 \Rightarrow b(\mH_2)^\uparrow \subseteq b(\mH_2)^\uparrow. $$
+	If~$\mH_1$ and~$\mH_2$ are hypergraphs on the same vertex set, then~$$\mH_1 \subseteq \mH_2 \Rightarrow b(\mH_2)^\uparrow \subseteq b(\mH_1)^\uparrow. $$
 \end{exercise}
 
 Set covering problems are the problems of finding a minimum weight/cost edge of the blocker of some hypergraph.
@@ -84,5 +84,7 @@ Set covering problems are the problems of finding a minimum weight/cost edge of 
 
 	If we apply~${\min}$ to both sides of~(A), we get~${b(b(\mH)) = H^{\min}}$.
 \end{proof}
+
+A clutter and a blocker are said to form a blocking pair.
 
 \end{document}
