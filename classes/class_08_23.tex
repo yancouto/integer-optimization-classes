@@ -59,7 +59,6 @@ The algorithm keeps
 \end{enumerate}
 
 Description: \\
-\hline
 \begin{algorithmic}
 	\LineComment{0. Initialize}
 	\State $L = \{N_0\}$,~$\LP_0$ is the LP relaxation of~$Ax + Gy \leq b$ with objective function~$c^T x + h^T y$.
@@ -96,7 +95,6 @@ Description: \\
 	\State Form two new LPs from~$\LP_i$ by adding the constraints~$x_j \leq \floor{x^\star_j}$ to one and~$x_j \geq \ceil{x^\star_j}$ to the other and add the two corresponding nodes to~$L$.
 	\State Go to ``1. Terminate?''
 \end{algorithmic}
-\hline
 \vspace{4ex}
 
 \begin{minipage}{0.45\textwidth}
